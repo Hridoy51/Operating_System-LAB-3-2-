@@ -12,15 +12,21 @@ int main() {
     Arrival[i] = 0;
     BT[i] = b;
   }
+  // cout << Q.size();
+  // cout << Q.top().first << " " << Q.top().second << endl;
   int m;
   cin >> m;
   vector<pair<int, int>> V;
   for (int i = n + 1; i <= (n + m); i++) {
     cin >> a >> b;
-    Arrival[n + 1] = a;
+    Arrival[i] = a;
     V.push_back({b, i});
     BT[i] = b;
   }
+  // for (auto t : Arrival)
+  //   cout << t << " ";
+  // for (auto t : V)
+  //   cout << t.first << " " << t.second << endl;
   int time = 0;
   vector<int> Task;
   map<int, int> ComplitionTime;
@@ -34,13 +40,18 @@ int main() {
     if (!a.first) {
       ComplitionTime[a.second] = time;
     }
-    Task.push_back(a.second);
-    int k = 0;
-    if (time <= m) {
-      Q.push({-V[k].first, V[k].second});
-      k++;
+    if (a.first) {
+      Q.push({-a.first, a.second});
     }
+    Task.push_back(a.second);
+
+    if (time <= m) {
+      Q.push({-V[time - 1].first, V[time - 1].second});
+    }
+    cout << endl << Q.size() << endl;
   }
+  for (auto t : ComplitionTime)
+    cout << t.first << " " << t.second << endl;
   cout << "TASK :  ";
   int avgT = 0, avgW = 0;
   for (int i = 1; i <= n + m; i++) {
