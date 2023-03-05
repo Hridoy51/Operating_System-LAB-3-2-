@@ -18,8 +18,8 @@ bool Valid_need(int p) {
   return 0;
 }
 bool safety_sequence() {
-  vector<int> finished(1000, 0);
-  int ct = 0;
+  vector<int> finished(p, 0);
+  int ct = 0, cut = 0;
   for (int i = 0; i < r; i++)
     work[i] = available[i];
   for (int i = 0; i < p; i++) {
@@ -28,18 +28,16 @@ bool safety_sequence() {
         work[j] += allocation[i][j];
       safeSequence.push_back(i);
       finished[i] = 1;
-      i = -1;
       ct++;
-    } else {
-      if (i == p - 1) {
-        return false;
-      }
     }
-    if (p == ct) {
+    if (i == p - 1) {
+      i = -1;
+      cut++;
+    }
+    if (cut > p or ct == p)
       break;
-    }
   }
-  return true;
+  return (ct == p);
 }
 void printSeq() {
   for (auto a : safeSequence)

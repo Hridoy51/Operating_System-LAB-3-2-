@@ -19,7 +19,7 @@ int main() {
     TurnOver[a.second] = turn;
   }
   cout << "AVERAGE TURNOVER : " << (double)turn / n << endl;
-  cout << "AVG WAITING : " << (double)TurnOver[n] / n << endl;
+  cout << "AVG WAITING : " << (double)TurnOver[n-1] / n << endl;
   cout << "TASK :  ";
   for (int i = 1; i <= n; i++) {
     cout << i << " ";

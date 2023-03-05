@@ -2,28 +2,40 @@
 using namespace std;
 int p, r;
 int available[1000];
-int maximun[1000][1000];
-int allocation[1000][1000], need[1000][1000];
+int request[1000][1000];
+int allocation[1000][1000];
 int work[1000];
 vector<int> safeSequence;
 
-vector<int> finished(1000, 0);
-bool Valid_need(int p) {
+bool Valid_req(int p) {
   int ct = 0;
   for (int i = 0; i < r; i++) {
-    if (work[i] >= need[p][i])
+    if (work[i] >= request[p][i])
       ct++;
   }
   if (ct == r)
     return 1;
   return 0;
 }
-bool safety_sequence() {
+bool Detect_Dead_Lock() {
+  vector<int> finished(1000, 0);
   int ct = 0, cut = 0;
   for (int i = 0; i < r; i++)
     work[i] = available[i];
   for (int i = 0; i < p; i++) {
-    if (!finished[i] and Valid_need(i)) {
+    int cnt = 0;
+    for (int j = 0; j < r; j++) {
+      if (allocation[i][j] == 0)
+        cnt++;
+    }
+    if (cnt == r) {
+      finished[i] = true;
+      safeSequence.push_back(i);
+    }
+  }
+
+  for (int i = 0; i < p; i++) {
+    if (!finished[i] and Valid_req(i)) {
       for (int j = 0; j < r; j++)
         work[j] += allocation[i][j];
       safeSequence.push_back(i);
@@ -48,21 +60,22 @@ int main() {
   cin >> p >> r;
   for (int i = 0; i < r; i++)
     cin >> available[i];
-  for (int i = 0; i < p; i++) {
-    for (int j = 0; j < r; j++) {
-      cin >> maximun[i][j];
-    }
-  }
+
   for (int i = 0; i < p; i++) {
     for (int j = 0; j < r; j++) {
       cin >> allocation[i][j];
-      need[i][j] = maximun[i][j] - allocation[i][j];
     }
   }
-  if (safety_sequence()) {
-    cout << "THE Safety Sequence is : ";
+  for (int i = 0; i < p; i++) {
+    for (int j = 0; j < r; j++) {
+      cin >> request[i][j];
+    }
+  }
+  if (Detect_Dead_Lock()) {
+    cout << "THE System is not in a dead...There is a safe sequence \nThe "
+            "sequence is : ";
     printSeq();
   } else {
-    cout << "THERE IS NO SAFE SEQUENCE";
+    cout << "The System is in a DEAD_LOCK ";
   }
 }

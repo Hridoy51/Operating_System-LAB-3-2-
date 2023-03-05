@@ -33,42 +33,21 @@ int main() {
     BT[i] = b;
   }
   sort(V.begin(), V.end());
-  //   for (auto a : V) {
-  //     cout << a.first << " " << a.second.second << " " << a.second.first <<
-  //     endl;
-  //   }
   queue<pair<int, int>> Burst;
   for (int i = 0; i < n; i++) {
-    // cout << V[i].first << " " << V[i + 1].first << endl;
-    //  if ((i = n - 1)) {
-    //    cout << "BBBBB" << endl;
-    //    turn += V[i].second.first;
-    //    t += V[i].second.first;
-    //    TurnOver[V[i].second.second] = turn;
-    //    Time.push_back(t);
-    //    Task.push_back(V[i].second.second);
-    //  }
     if ((V[i].first != V[i + 1].first)) {
-      cout << "KHIJH" << endl;
-      //   turn += V[i].second.second;
       t += V[i].second.second;
       TurnOver[V[i].second.first] = t;
       Time.push_back(t);
       Task.push_back(V[i].second.first);
     } else {
-      cout << "aaaaa" << endl;
       Burst.push({V[i].second.first, V[i].second.second});
       int k = i + 1;
       while (V[i].first == V[k].first) {
         Burst.push({V[k].second.first, V[k].second.second});
         k++;
       }
-      //   while (!Burst.empty()) {
-      //     cout << Burst.front().first << " " << Burst.front().second << endl;
-      //     Burst.pop();
-      //   }
       i = --k;
-      // cout << i << endl;
       Round_Robin(Burst, q);
     }
   }
