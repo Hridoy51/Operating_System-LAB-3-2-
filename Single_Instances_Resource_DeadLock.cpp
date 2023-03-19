@@ -37,24 +37,19 @@ int main() {
       }
     }
   }
-  //   for (int i = 1; i <= p; i++) {
-  //     cout << "process " << i << " : ";
-  //     for (int j = 0; j < graph[i].size(); j++) {
-  //       cout << graph[i][j] << " ";
-  //     }
-  //     cout << endl;
-  //   }
   for (int i = 1; i <= p; i++) {
     for (int j = 0; j <= p; j++)
       visited[j] = 0;
     if (dead == 1) {
-      cout << "DEAD LOCK DETECTED ";
-      return 0;
+      break;
     }
     global = i;
     if (!visited[i]) {
       dfs(i);
     }
   }
-  cout << "THERE IS NO DEADLOCK";
+  if (dead == 1)
+    cout << "DEADLOCK DETECTED";
+  else
+    cout << "THERE IS NO DEADLOCK";
 }
