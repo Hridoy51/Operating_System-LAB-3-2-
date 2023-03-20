@@ -44,9 +44,7 @@ int main() {
       break;
     }
     global = i;
-    if (!visited[i]) {
-      dfs(i);
-    }
+    dfs(i);
   }
   if (dead == 1)
     cout << "DEADLOCK DETECTED";
